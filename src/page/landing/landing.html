@@ -1,0 +1,585 @@
+﻿
+  <!-- Background Effects -->
+  <div class="bg-grid"></div>
+  <div class="bg-scanlines"></div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon"></div>
+        <div class="logo-text">GROWTH<span>AI</span></div>
+      </a>
+      
+      <div class="nav-links">
+        <a href="#systems">Systems</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      
+      <button class="nav-btn" onclick="openModal()">Access Terminal</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            System Status: Online
+          </div>
+          
+          <h1 class="hero-title">
+            AUTONOMOUS<br>
+            <span class="gradient">GROWTH</span><span class="dim"> ENGINE</span>
+          </h1>
+          
+          <div class="hero-typing" id="typing-text">
+            <span id="typed"></span><span class="cursor">â–Œ</span>
+          </div>
+          
+          <p class="hero-description">
+            One engine for SEO, SMO, GMB, Web Development, CRO &amp; Content. 
+            Let our AI agents handle your marketing while you focus on growing your business.
+          </p>
+          
+          <form class="hero-form" onsubmit="event.preventDefault(); openModal();">
+            <input type="email" class="hero-input" placeholder="Enter your email" id="hero-email">
+            <button type="submit" class="hero-btn">Initialize Engine</button>
+          </form>
+          
+          <div class="hero-features">
+            <span><span class="check">âœ“</span> 7-day free trial</span>
+            <span><span class="check">âœ“</span> No credit card</span>
+          </div>
+        </div>
+        
+        <div class="animation-container">
+          <div class="animation-glow"></div>
+          
+          <div class="ping-ring ping-ring-1"></div>
+          <div class="ping-ring ping-ring-2"></div>
+          
+          <div class="orbit-ring orbit-ring-1"></div>
+          <div class="orbit-ring orbit-ring-2"></div>
+          <div class="orbit-ring orbit-ring-3"></div>
+          
+          <!-- Data Flow Lines SVG -->
+          <svg class="data-lines" viewBox="0 0 400 400">
+            <defs>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00ffc8" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#00ffc8" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line x1="200" y1="150" x2="200" y2="50" stroke="url(#lineGradient)" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="270" y1="185" x2="340" y2="140" stroke="url(#lineGradient)" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="270" y1="215" x2="340" y2="260" stroke="url(#lineGradient)" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="200" y1="250" x2="200" y2="350" stroke="url(#lineGradient)" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="130" y1="215" x2="60" y2="260" stroke="url(#lineGradient)" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="130" y1="185" x2="60" y2="140" stroke="url(#lineGradient)" stroke-width="1" stroke-dasharray="4 4"/>
+          </svg>
+          
+          <!-- Orbiting Modules -->
+          <div class="orbit-module" style="animation-delay: 0s;">
+            <div class="orbit-module-icon">ðŸ”</div>
+            <span class="orbit-module-label" style="color: #22d3ee;">SEO</span>
+          </div>
+          <div class="orbit-module" style="animation-delay: -2.5s;">
+            <div class="orbit-module-icon">ðŸ“±</div>
+            <span class="orbit-module-label" style="color: #a855f7;">SMO</span>
+          </div>
+          <div class="orbit-module" style="animation-delay: -5s;">
+            <div class="orbit-module-icon">ðŸ“</div>
+            <span class="orbit-module-label" style="color: #3b82f6;">GMB</span>
+          </div>
+          <div class="orbit-module" style="animation-delay: -7.5s;">
+            <div class="orbit-module-icon">âœï¸</div>
+            <span class="orbit-module-label" style="color: #ef4444;">Content</span>
+          </div>
+          <div class="orbit-module" style="animation-delay: -10s;">
+            <div class="orbit-module-icon">ðŸ’»</div>
+            <span class="orbit-module-label" style="color: #22c55e;">Web</span>
+          </div>
+          <div class="orbit-module" style="animation-delay: -12.5s;">
+            <div class="orbit-module-icon">ðŸ“§</div>
+            <span class="orbit-module-label" style="color: #eab308;">Email</span>
+          </div>
+          <div class="orbit-module" style="animation-delay: -15s;">
+            <div class="orbit-module-icon">ðŸ“Š</div>
+            <span class="orbit-module-label" style="color: #f97316;">CRO</span>
+          </div>
+          <div class="orbit-module" style="animation-delay: -17.5s;">
+            <div class="orbit-module-icon">ðŸ¤–</div>
+            <span class="orbit-module-label" style="color: #ec4899;">AI</span>
+          </div>
+          
+          <!-- Central AI Core -->
+          <div class="ai-core">
+            <div class="ai-core-glow"></div>
+            <div class="ai-core-container">
+              <span class="ai-core-icon">ðŸ§ </span>
+              <span class="ai-core-label">CORE</span>
+            </div>
+            <div class="ai-status">
+              <span class="ai-status-dot"></span>
+              ACTIVE
+            </div>
+          </div>
+          
+          <!-- Floating Dots -->
+          <div class="floating-dots" style="top: 25%; left: 30%; animation-delay: 0s;"></div>
+          <div class="floating-dots" style="top: 35%; left: 70%; animation-delay: 0.3s;"></div>
+          <div class="floating-dots" style="top: 55%; left: 25%; animation-delay: 0.6s;"></div>
+          <div class="floating-dots" style="top: 40%; left: 65%; animation-delay: 0.9s;"></div>
+          <div class="floating-dots" style="top: 65%; left: 55%; animation-delay: 1.2s;"></div>
+          <div class="floating-dots" style="top: 70%; left: 40%; animation-delay: 1.5s;"></div>
+          
+          <!-- Bottom Label -->
+          <div class="animation-label">
+            <div class="animation-label-text">AUTOMATION SYSTEM</div>
+            <div class="animation-label-icons">
+              <span>ðŸ”</span>
+              <span>ðŸ“±</span>
+              <span>ðŸ“</span>
+              <span>âœï¸</span>
+              <span class="more">...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">10,000+</div>
+          <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">2.5M+</div>
+          <div class="stat-label">Leads Generated</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">98.5%</div>
+          <div class="stat-label">Uptime</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">24/7</div>
+          <div class="stat-label">Automation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section class="problem-section">
+    <div class="container" style="text-align: center;">
+      <h2 class="section-title"><span class="prefix">&gt;</span> The Old Way is Broken</h2>
+      <p class="section-description">
+        Marketing today means juggling dozens of tools, spending hours on repetitive tasks, 
+        and still not seeing the results you deserve.
+      </p>
+      
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="problem-icon">ðŸ’¸</div>
+          <h3 class="problem-title">Multiple expensive tools</h3>
+          <p class="problem-desc">SEO tools, social schedulers, content writers... costs add up.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">â°</div>
+          <h3 class="problem-title">Hours of manual work</h3>
+          <p class="problem-desc">Creating content, posting updates, checking rankings endlessly.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">ðŸ“‰</div>
+          <h3 class="problem-title">Inconsistent results</h3>
+          <p class="problem-desc">Without a system, marketing success becomes unpredictable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Systems Section -->
+  <section id="systems" class="systems-section">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="section-label">System Architecture</div>
+        <h2 class="section-title"><span class="prefix">&gt;</span> System Modules</h2>
+        <p class="section-description" style="margin-bottom: 0;">
+          One unified engine powering all your marketing needs.
+        </p>
+      </div>
+      
+      <div class="systems-grid">
+        <div class="system-card">
+          <div class="system-icon">ðŸ”</div>
+          <h3 class="system-name">SEO &amp; Semantics</h3>
+          <p class="system-desc">Autonomous crawling, keyword optimization, and real-time ranking analysis.</p>
+        </div>
+        <div class="system-card">
+          <div class="system-icon">ðŸ“±</div>
+          <h3 class="system-name">SMO Engine</h3>
+          <p class="system-desc">Social media synthesis, automated posting, and engagement optimization.</p>
+        </div>
+        <div class="system-card">
+          <div class="system-icon">ðŸ“</div>
+          <h3 class="system-name">GMB Automation</h3>
+          <p class="system-desc">Google My Business optimization for maximum local visibility.</p>
+        </div>
+        <div class="system-card">
+          <div class="system-icon">âœï¸</div>
+          <h3 class="system-name">Gen-AI Content</h3>
+          <p class="system-desc">Human-like content generation that resonates with your audience.</p>
+        </div>
+        <div class="system-card">
+          <div class="system-icon">ðŸ’»</div>
+          <h3 class="system-name">Web Development</h3>
+          <p class="system-desc">Auto-coded landing pages and websites optimized for conversions.</p>
+        </div>
+        <div class="system-card">
+          <div class="system-icon">ðŸ“§</div>
+          <h3 class="system-name">Email Systems</h3>
+          <p class="system-desc">Intelligent drip campaigns and automated email sequences.</p>
+        </div>
+        <div class="system-card">
+          <div class="system-icon">ðŸ“Š</div>
+          <h3 class="system-name">CRO Logic</h3>
+          <p class="system-desc">Conversion rate optimization algorithms that maximize results.</p>
+        </div>
+        <div class="system-card">
+          <div class="system-icon">ðŸ¤–</div>
+          <h3 class="system-name">AI Agents</h3>
+          <p class="system-desc">Autonomous agents working 24/7 on your growth objectives.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-section">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="section-label">Operational Flow</div>
+        <h2 class="section-title"><span class="prefix">&gt;</span> How It Works</h2>
+      </div>
+      
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="how-number">01</div>
+          <h3 class="how-title">Connect</h3>
+          <p class="how-desc">Link your website and social accounts.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-number">02</div>
+          <h3 class="how-title">Configure</h3>
+          <p class="how-desc">Tell us your goals and audience.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-number">03</div>
+          <h3 class="how-title">Automate</h3>
+          <p class="how-desc">AI agents work 24/7 for you.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-number">04</div>
+          <h3 class="how-title">Scale</h3>
+          <p class="how-desc">Watch metrics improve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="section-label">User Feedback</div>
+        <h2 class="section-title"><span class="prefix">&gt;</span> Results That Speak</h2>
+      </div>
+      
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">"GrowthAI completely transformed our marketing. The autonomous agents work while we sleep, generating leads we never could have reached manually."</p>
+          <div class="testimonial-footer">
+            <div>
+              <div class="testimonial-name">Sarah Chen</div>
+              <div class="testimonial-role">CEO, TechStartup</div>
+            </div>
+            <div class="testimonial-result">+340% leads</div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"We replaced 3 marketing tools with GrowthAI. The integration of SEO, social, and content in one platform is incredibly powerful."</p>
+          <div class="testimonial-footer">
+            <div>
+              <div class="testimonial-name">Marcus Johnson</div>
+              <div class="testimonial-role">Marketing Director</div>
+            </div>
+            <div class="testimonial-result">3 tools â†’ 1</div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The Gen-AI content feature alone saved us 20+ hours per week. Our blog traffic increased by 200% in just 2 months."</p>
+          <div class="testimonial-footer">
+            <div>
+              <div class="testimonial-name">Priya Sharma</div>
+              <div class="testimonial-role">E-commerce Founder</div>
+            </div>
+            <div class="testimonial-result">+200% traffic</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="pricing-section">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="section-label">Velocity Tiers</div>
+        <h2 class="section-title"><span class="prefix">&gt;</span> Select Compute Velocity</h2>
+      </div>
+      
+      <div class="pricing-grid">
+        <!-- Starter Plan -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <div class="pricing-name">Starter</div>
+            <div class="pricing-price">
+              <span class="pricing-amount">$99</span>
+              <span class="pricing-period">/month</span>
+            </div>
+          </div>
+          
+          <div class="pricing-speed">
+            <div class="speed-header">
+              <span>Speed</span>
+              <span>1x Standard</span>
+            </div>
+            <div class="speed-bar">
+              <div class="speed-fill gray" style="width: 20%;"></div>
+            </div>
+          </div>
+          
+          <ul class="pricing-features">
+            <li><span class="check">âœ“</span> Standard AI Language Model</li>
+            <li><span class="check">âœ“</span> Linear Content Processing</li>
+            <li><span class="check">âœ“</span> Basic SEO keyword matching</li>
+            <li><span class="check">âœ“</span> 5 Social Posts per week</li>
+            <li><span class="check">âœ“</span> Email Support</li>
+          </ul>
+          
+          <button class="pricing-btn secondary" onclick="openModal()">Start Free Trial</button>
+        </div>
+        
+        <!-- Professional Plan -->
+        <div class="pricing-card popular">
+          <span class="popular-badge">Recommended</span>
+          <div class="pricing-header">
+            <div class="pricing-name">Professional</div>
+            <div class="pricing-price">
+              <span class="pricing-amount">$199</span>
+              <span class="pricing-period">/month</span>
+            </div>
+          </div>
+          
+          <div class="pricing-speed">
+            <div class="speed-header">
+              <span>Speed</span>
+              <span class="speed-value">5x Hyper-Velocity</span>
+            </div>
+            <div class="speed-bar">
+              <div class="speed-fill gradient" style="width: 60%;"></div>
+            </div>
+          </div>
+          
+          <ul class="pricing-features">
+            <li><span class="check">âœ“</span> ProModel X1 Neural Engine (5x Faster)</li>
+            <li><span class="check">âœ“</span> Hyperscale Distributed Crawlers</li>
+            <li><span class="check">âœ“</span> Multi-threaded Semantic Synthesis</li>
+            <li><span class="check">âœ“</span> Real-time SERP Volatility Analysis</li>
+            <li><span class="check">âœ“</span> Unlimited Social Posts</li>
+            <li><span class="check">âœ“</span> Priority Support</li>
+          </ul>
+          
+          <button class="pricing-btn primary" onclick="openModal()">Start 7-Day Trial</button>
+        </div>
+        
+        <!-- Enterprise Plan -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <div class="pricing-name">Enterprise</div>
+            <div class="pricing-price">
+              <span class="pricing-amount">$399</span>
+              <span class="pricing-period">/month</span>
+            </div>
+          </div>
+          
+          <div class="pricing-speed">
+            <div class="speed-header">
+              <span>Speed</span>
+              <span>Unlimited Cluster</span>
+            </div>
+            <div class="speed-bar">
+              <div class="speed-fill gradient" style="width: 100%;"></div>
+            </div>
+          </div>
+          
+          <ul class="pricing-features">
+            <li><span class="check">âœ“</span> Dedicated HPC Clusters</li>
+            <li><span class="check">âœ“</span> Custom LLM Training on your Data</li>
+            <li><span class="check">âœ“</span> Global Edge CDN Inference</li>
+            <li><span class="check">âœ“</span> White-label Reporting</li>
+            <li><span class="check">âœ“</span> Dedicated Account Manager</li>
+            <li><span class="check">âœ“</span> API Access</li>
+          </ul>
+          
+          <button class="pricing-btn secondary" onclick="openModal()">Contact Sales</button>
+        </div>
+      </div>
+      
+      <div class="pricing-notice">
+        <span class="prefix">&gt;</span> 7-day free trial of Professional. No credit card required.
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq-section">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="section-label">Knowledge Base</div>
+        <h2 class="section-title"><span class="prefix">&gt;</span> Technical Specs</h2>
+      </div>
+      
+      <div class="faq-list">
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>What is the ProModel X1 Engine?</span>
+            <span class="faq-icon">â–¼</span>
+          </div>
+          <div class="faq-answer">
+            <p>The ProModel X1 is our proprietary neural architecture designed specifically for high-volume text generation. It utilizes a mixture-of-experts (MoE) approach to deliver 5x faster inference speeds while maintaining content quality.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>How does the 5x speed scale work?</span>
+            <span class="faq-icon">â–¼</span>
+          </div>
+          <div class="faq-answer">
+            <p>Our Professional tier allocates 5x the GPU compute nodes to your requests, allowing for parallel processing of multiple queries. This drastically reduces time for large-scale SEO audits and content generation.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Can I cancel my subscription anytime?</span>
+            <span class="faq-icon">â–¼</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, absolutely. You can cancel your subscription at any time with no hidden fees or penalties. Your access continues until the end of your billing period.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>What integrations do you support?</span>
+            <span class="faq-icon">â–¼</span>
+          </div>
+          <div class="faq-answer">
+            <p>We integrate with all major platforms including Google Search Console, Google Analytics, Facebook, Instagram, Twitter, LinkedIn, WordPress, Shopify, and many more. Custom integrations available for Enterprise plans.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Is there a free trial?</span>
+            <span class="faq-icon">â–¼</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! All new users get a 7-day free trial of our Professional plan. No credit card required to start. Experience the full power of GrowthAI before committing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="cta-section">
+    <div class="container" style="text-align: center;">
+      <div class="cta-label">Final Transmission</div>
+      <h2 class="cta-title">Ready to Go <span class="highlight">Autonomous</span>?</h2>
+      <p class="cta-description">
+        Join thousands of businesses using GrowthAI to automate marketing and dominate markets.
+      </p>
+      <div class="cta-buttons">
+        <button class="cta-btn primary" onclick="openModal()">Start Free Trial</button>
+        <button class="cta-btn secondary">Sign In</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <div class="footer-logo-icon"></div>
+        <span class="footer-logo-text">GROWTH<span>AI</span></span>
+      </div>
+      
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+      </div>
+      
+      <p class="footer-copy">Shifting Human Operations To Machine Precision Â© 2024</p>
+    </div>
+  </footer>
+
+  <!-- Registration Modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-backdrop" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title">New User Registration</span>
+        <button class="modal-close" onclick="closeModal()">[X]</button>
+      </div>
+      
+      <form onsubmit="event.preventDefault(); handleSubmit();">
+        <div class="form-group">
+          <label class="form-label">FULL NAME:</label>
+          <input type="text" class="form-input" placeholder="John Doe" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">EMAIL:</label>
+          <input type="email" class="form-input" id="modal-email" placeholder="you@example.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">PASSWORD:</label>
+          <input type="password" class="form-input" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required minlength="8">
+        </div>
+        
+        <button type="submit" class="modal-btn" id="submit-btn">CREATE ACCOUNT</button>
+      </form>
+      
+      <div class="modal-footer">
+        Already registered? <a href="#">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  
+
+

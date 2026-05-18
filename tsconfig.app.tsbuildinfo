@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/page/admin/index.tsx","./src/page/auth/AuthHeader.tsx","./src/page/auth/AuthShell.tsx","./src/page/forgot/index.tsx","./src/page/landing/index.tsx","./src/page/login/index.tsx","./src/page/pricing/index.tsx","./src/page/register/index.tsx","./src/page/reset/index.tsx","./src/page/workspace/index.tsx"],"version":"5.9.3"}
