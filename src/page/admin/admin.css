@@ -834,20 +834,63 @@
   gap: 10px;
 }
 
+.admin-preview-doc-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .admin-preview-doc strong,
-.admin-preview-doc small {
+.admin-preview-doc small,
+.admin-preview-doc-head strong,
+.admin-preview-doc-head small {
   display: block;
 }
 
-.admin-preview-doc strong {
+.admin-preview-doc strong,
+.admin-preview-doc-head strong {
   font-size: 13px;
   color: #f1f1f4;
 }
 
-.admin-preview-doc small {
+.admin-preview-doc small,
+.admin-preview-doc-head small {
   font-size: 11px;
   color: #9898a1;
   margin-top: 3px;
+}
+
+.admin-preview-pdf {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-preview-pdf-frame {
+  width: 100%;
+  height: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: #111113;
+}
+
+.admin-preview-open {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 32px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f2f2f5;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-preview-open:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .admin-send-btn {

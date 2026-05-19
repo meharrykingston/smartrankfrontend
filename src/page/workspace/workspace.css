@@ -1147,6 +1147,18 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #e9e9ed;
   font-size: 12px;
+  transition: border-color 0.22s ease, background 0.22s ease, opacity 0.22s ease, transform 0.22s ease;
+}
+
+.workspace-queue-item.sending {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.075);
+}
+
+.workspace-queue-item.folded {
+  border-color: rgba(133, 255, 189, 0.22);
+  background: rgba(133, 255, 189, 0.08);
+  color: #d8ffe8;
 }
 
 .workspace-queue-item span {
@@ -1156,12 +1168,50 @@ body {
   white-space: nowrap;
 }
 
+.workspace-queue-state {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  max-width: none;
+  padding: 0 8px;
+  min-height: 22px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.09);
+  color: #f2f2f5;
+}
+
+.workspace-queue-state.pending {
+  background: rgba(255, 255, 255, 0.09);
+  color: #d9d9df;
+}
+
+.workspace-queue-state.sending {
+  background: rgba(120, 176, 255, 0.16);
+  color: #ddebff;
+}
+
+.workspace-queue-state.folded {
+  background: rgba(133, 255, 189, 0.16);
+  color: #d8ffe8;
+}
+
 .workspace-queue-item button,
 .workspace-composer-chip {
   border: 0;
   background: transparent;
   color: inherit;
   cursor: pointer;
+}
+
+.workspace-queue-item button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .workspace-input-wrap-chat {

@@ -45,6 +45,7 @@ type AdminAttachment = {
   size: number
   type: 'image' | 'document'
   downloadUrl?: string
+  contentType?: string
   file?: File
 }
 
@@ -83,6 +84,9 @@ const getAgentProgressText = (message: ChatMessage | null | undefined) =>
   message?.text.trim().startsWith(AGENT_STATE_PREFIX)
     ? message.text.trim().slice(AGENT_STATE_PREFIX.length).trim()
     : message?.text.trim() ?? ''
+
+const isPdfAttachment = (attachment: AdminAttachment) =>
+  attachment.contentType === 'application/pdf' || attachment.name.toLowerCase().endsWith('.pdf')
 
 export default function AdminPage() {
   const [users, setUsers] = useState<AdminUser[]>([])
@@ -407,7 +411,7 @@ export default function AdminPage() {
         }),
       )
 
-      const response = await adminFetch('/api/chat/messages', {
+          const response = await adminFetch('/api/chat/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -421,6 +425,7 @@ export default function AdminPage() {
             size: attachment.size,
             type: attachment.type,
             downloadUrl: attachment.downloadUrl,
+            contentType: attachment.contentType,
           })),
         }),
       })
@@ -752,6 +757,24 @@ export default function AdminPage() {
                       <a href={file.downloadUrl} target="_blank" rel="noreferrer" className="admin-preview-image-link">
                         <img src={file.downloadUrl} alt={file.name} className="admin-preview-image" />
                       </a>
+                    ) : isPdfAttachment(file) && file.downloadUrl ? (
+                      <div className="admin-preview-pdf">
+                        <div className="admin-preview-doc-head">
+                          <FileText size={15} />
+                          <div>
+                            <strong>{file.name}</strong>
+                            <small>PDF preview</small>
+                          </div>
+                        </div>
+                        <iframe
+                          src={file.downloadUrl}
+                          title={file.name}
+                          className="admin-preview-pdf-frame"
+                        />
+                        <a href={file.downloadUrl} target="_blank" rel="noreferrer" className="admin-preview-open">
+                          Open PDF
+                        </a>
+                      </div>
                     ) : (
                       <div className="admin-preview-doc">
                         <FileText size={15} />

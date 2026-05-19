@@ -88,6 +88,7 @@ type PendingContext = {
   id: string
   text: string
   attachments: ComposerAttachment[]
+  status: 'pending' | 'sending' | 'folded'
 }
 
 const QUICK_TASKS: QuickTask[] = [
@@ -442,13 +443,29 @@ export default function Workspace() {
 
   useEffect(() => {
     if (!userId || hasPendingAdminReply || queuedContexts.length === 0 || isUploading) return
-    const next = queuedContexts[0]
+    const next = queuedContexts.find((entry) => entry.status === 'pending')
+    if (!next) return
     let cancelled = false
 
     const run = async () => {
-      await sendUserMessage(next.text, next.attachments)
+      setQueuedContexts((current) =>
+        current.map((entry) => (entry.id === next.id ? { ...entry, status: 'sending' } : entry)),
+      )
+      const ok = await sendUserMessage(next.text, next.attachments)
+      if (cancelled) return
       if (!cancelled) {
-        setQueuedContexts((current) => current.filter((entry) => entry.id !== next.id))
+        if (ok) {
+          setQueuedContexts((current) =>
+            current.map((entry) => (entry.id === next.id ? { ...entry, status: 'folded' } : entry)),
+          )
+          window.setTimeout(() => {
+            setQueuedContexts((current) => current.filter((entry) => entry.id !== next.id))
+          }, 1400)
+        } else {
+          setQueuedContexts((current) =>
+            current.map((entry) => (entry.id === next.id ? { ...entry, status: 'pending' } : entry)),
+          )
+        }
       }
     }
 
@@ -595,7 +612,7 @@ export default function Workspace() {
   }
 
   const sendUserMessage = async (text: string, nextAttachments: ComposerAttachment[] = []) => {
-    if (!userId) return
+    if (!userId) return false
     setSendError('')
     setProfileNotice('')
     let conversationId = activeConversationId
@@ -603,7 +620,7 @@ export default function Workspace() {
       const createdId = await createNewConversation('New chat')
       conversationId = createdId || ''
     }
-    if (!conversationId) return
+    if (!conversationId) return false
     setIsUploading(true)
     try {
       const uploadedAttachments = await Promise.all(
@@ -654,12 +671,16 @@ export default function Workspace() {
       if (!response.ok || !data?.ok) {
         setSendError(data?.error ?? 'Unable to send message.')
         await loadSession(userId)
-        return
+        return false
       }
       await loadMessages(userId, conversationId)
       await loadConversations(userId)
       await loadSession(userId)
       setUnreadByConversation((current) => ({ ...current, [conversationId]: false }))
+      return true
+    } catch (error) {
+      setSendError(error instanceof Error ? error.message : 'Unable to send message.')
+      return false
     } finally {
       setIsUploading(false)
     }
@@ -696,6 +717,7 @@ export default function Workspace() {
         id: `${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
         text: payload,
         attachments: nextAttachments,
+        status: 'pending',
       },
     ])
     setPrompt('')
@@ -1318,12 +1340,14 @@ export default function Workspace() {
                 <span className="workspace-queue-label">Queued context</span>
                 <div className="workspace-queue-items">
                   {queuedContexts.map((item, index) => (
-                    <div key={item.id} className="workspace-queue-item">
+                    <div key={item.id} className={`workspace-queue-item ${item.status}`}>
+                      <span className={`workspace-queue-state ${item.status}`}>{item.status}</span>
                       <span>{index + 1}. {item.text}</span>
                       <button
                         type="button"
                         aria-label={`Remove queued context ${index + 1}`}
                         onClick={() => setQueuedContexts((current) => current.filter((entry) => entry.id !== item.id))}
+                        disabled={item.status === 'sending'}
                       >
                         <X size={12} />
                       </button>
