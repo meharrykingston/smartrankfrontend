@@ -1,5 +1,5 @@
 ﻿import { useState } from "react";
-import { ArrowRight, Chrome, Facebook, Lock, Mail, User } from "lucide-react";
+import { ArrowRight, Lock, Mail, User } from "lucide-react";
 import AuthHeader from "../auth/AuthHeader";
 import AuthShell from "../auth/AuthShell";
 import "../auth/auth.css";
@@ -13,6 +13,15 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+
+  const getUserId = () => {
+    const key = "smartrank_user_id";
+    const existing = window.localStorage.getItem(key);
+    if (existing) return existing;
+    const created = `user_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+    window.localStorage.setItem(key, created);
+    return created;
+  };
 
   const handleSubmit = async () => {
     setError("");
@@ -38,7 +47,7 @@ const RegisterPage = () => {
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify({ userId: getUserId(), email, password, name }),
       });
       const data = await response.json();
       if (!response.ok || !data?.ok) {
@@ -46,40 +55,10 @@ const RegisterPage = () => {
         return;
       }
 
-      if (data?.session) {
-        localStorage.setItem("SmartRank_session", JSON.stringify(data.session));
-        setMessage("Account created. Redirecting to workspace...");
-        window.location.href = "/workspace";
-        return;
-      }
-
-      setMessage("Account created. Check your email to verify and sign in.");
+      setMessage("Account created. Redirecting to workspace...");
+      window.location.href = "/workspace";
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unable to create account.";
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const startOAuth = async (provider: "google" | "facebook") => {
-    setError("");
-    setMessage("");
-    setLoading(true);
-    try {
-      const response = await fetch("/api/auth/oauth/start", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ provider }),
-      });
-      const data = await response.json();
-      if (!response.ok || !data?.ok || !data?.url) {
-        setError(data?.error ?? "Unable to start OAuth.");
-        return;
-      }
-      window.location.href = data.url;
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Unable to start OAuth.";
       setError(message);
     } finally {
       setLoading(false);
@@ -172,23 +151,6 @@ const RegisterPage = () => {
           <ArrowRight size={16} />
         </button>
       </form>
-
-      <div className="auth-divider">or continue with</div>
-
-      <div className="auth-oauth">
-        <button type="button" onClick={() => startOAuth("google")} disabled={loading}>
-          <Chrome size={16} />
-          Continue with Google
-        </button>
-        <button type="button" onClick={() => startOAuth("facebook")} disabled={loading}>
-          <Facebook size={16} />
-          Continue with Facebook
-        </button>
-        <button type="button">
-          <Mail size={16} />
-          Continue with Email
-        </button>
-      </div>
     </AuthShell>
   );
 };

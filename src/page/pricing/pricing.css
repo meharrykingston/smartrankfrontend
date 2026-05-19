@@ -38,9 +38,9 @@
 }
 
 .pricing-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
+  width: auto;
+  height: 34px;
+  max-width: 150px;
   object-fit: cover;
   display: block;
 }
@@ -96,6 +96,12 @@
   gap: 8px;
 }
 
+.pricing-cta-button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
 .pricing-cta {
   background: linear-gradient(135deg, var(--pricing-accent), var(--pricing-accent-2));
   color: #000000;
@@ -149,6 +155,13 @@
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.pricing-notice {
+  margin-top: 14px;
+  color: var(--pricing-muted);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .pricing-hero-card {

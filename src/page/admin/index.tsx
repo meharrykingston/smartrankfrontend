@@ -6,6 +6,7 @@ import {
   LoaderCircle,
   LockKeyhole,
   LogOut,
+  PanelLeft,
   Paperclip,
   SendHorizontal,
   Shield,
@@ -53,6 +54,36 @@ type AdminChallenge = {
   expiresInMs: number
 }
 
+type RenderMessage = {
+  id: string
+  sender: 'user' | 'admin'
+  text: string
+  time: string
+  createdAt: number
+  attachments?: AdminAttachment[]
+  segments: string[]
+  groupedIds: string[]
+}
+
+const AGENT_STATE_PREFIX = '[[state]] '
+const AGENT_STATE_OPTIONS = [
+  'Reading request...',
+  'Finding outcome...',
+  'Extracting signals...',
+  'Compacting context...',
+  'Finding leverage...',
+  'Structuring response...',
+  'Preparing answer...',
+] as const
+
+const isAgentProgressMessage = (message: ChatMessage | null | undefined) =>
+  Boolean(message && message.sender === 'admin' && message.text.trim().startsWith(AGENT_STATE_PREFIX))
+
+const getAgentProgressText = (message: ChatMessage | null | undefined) =>
+  message?.text.trim().startsWith(AGENT_STATE_PREFIX)
+    ? message.text.trim().slice(AGENT_STATE_PREFIX.length).trim()
+    : message?.text.trim() ?? ''
+
 export default function AdminPage() {
   const [users, setUsers] = useState<AdminUser[]>([])
   const [selectedUserId, setSelectedUserId] = useState('')
@@ -72,12 +103,69 @@ export default function AdminPage() {
   const [authError, setAuthError] = useState('')
   const [authLoading, setAuthLoading] = useState(false)
   const [adminActionError, setAdminActionError] = useState('')
+  const [showMobileQueue, setShowMobileQueue] = useState(false)
+  const [agentStateText, setAgentStateText] = useState<string>(AGENT_STATE_OPTIONS[0])
   const fileInputRef = useRef<HTMLInputElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const selectedUser = useMemo(
     () => users.find((user) => user.userId === selectedUserId) ?? null,
     [selectedUserId, users],
+  )
+  const progressMessages = useMemo(
+    () => messages.filter((message) => isAgentProgressMessage(message)),
+    [messages],
+  )
+  const visibleMessages = useMemo(
+    () => messages.filter((message) => !isAgentProgressMessage(message)),
+    [messages],
+  )
+  const renderMessages = useMemo<RenderMessage[]>(() => {
+    const grouped: RenderMessage[] = []
+
+    for (const message of visibleMessages) {
+      const last = grouped[grouped.length - 1]
+      const canMergeAdmin =
+        message.sender === 'admin' &&
+        last?.sender === 'admin' &&
+        message.attachments?.length === 0 &&
+        (last.attachments?.length ?? 0) === 0
+
+      if (canMergeAdmin && last) {
+        last.segments.push(message.text)
+        last.text = `${last.text}\n\n${message.text}`
+        last.time = message.time
+        last.createdAt = message.createdAt
+        last.id = message.id
+        last.groupedIds.push(message.id)
+        continue
+      }
+
+      grouped.push({
+        id: message.id,
+        sender: message.sender,
+        text: message.text,
+        time: message.time,
+        createdAt: message.createdAt,
+        attachments: message.attachments,
+        segments: [message.text],
+        groupedIds: [message.id],
+      })
+    }
+
+    return grouped
+  }, [visibleMessages])
+  const latestProgressMessage = useMemo(() => [...progressMessages].reverse()[0] ?? null, [progressMessages])
+  const conversationAttachments = useMemo(
+    () =>
+      visibleMessages.flatMap((message) =>
+        (message.attachments ?? []).map((attachment) => ({
+          ...attachment,
+          sender: message.sender,
+          time: message.time,
+        })),
+      ),
+    [visibleMessages],
   )
 
   const safeJson = async (response: Response) => {
@@ -197,6 +285,12 @@ export default function AdminPage() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  useEffect(() => {
+    if (selectedUserId) {
+      setShowMobileQueue(false)
+    }
+  }, [selectedUserId, activeConversationId])
 
   useEffect(() => {
     if (!isAuthenticated || !selectedUserId) return
@@ -389,6 +483,31 @@ export default function AdminPage() {
     await loadUsers()
   }
 
+  const handlePushAgentState = async () => {
+    setAdminActionError('')
+    if (!selectedUserId || !activeConversationId) {
+      setAdminActionError('Select a user conversation before updating agent state.')
+      return
+    }
+    const text = agentStateText.trim()
+    if (!text) {
+      setAdminActionError('Choose or write a state before updating it.')
+      return
+    }
+    const response = await adminFetch(`/api/admin/chats/${encodeURIComponent(selectedUserId)}/state`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ conversationId: activeConversationId, text }),
+    })
+    const data = (await safeJson(response)) as { ok?: boolean; error?: string } | null
+    if (!response.ok || !data?.ok) {
+      setAdminActionError(data?.error ?? 'Unable to update agent state right now.')
+      return
+    }
+    await loadMessages(selectedUserId, activeConversationId)
+    await loadUsers()
+  }
+
   if (!authChecked) {
     return (
       <div className="admin-auth-root">
@@ -458,12 +577,22 @@ export default function AdminPage() {
       </header>
 
       <main className="admin-layout">
-        <aside className="admin-users">
+        {showMobileQueue ? (
+          <button
+            type="button"
+            className="admin-mobile-overlay"
+            aria-label="Close queue"
+            onClick={() => setShowMobileQueue(false)}
+          />
+        ) : null}
+
+        <aside className={`admin-users ${showMobileQueue ? 'admin-users-open' : ''}`}>
           <div className="admin-users-head">
             <h2>Live queue</h2>
             <span>{users.length} active</span>
           </div>
           <div className="admin-user-list">
+            {users.length === 0 ? <div className="admin-user-empty">No live users yet.</div> : null}
             {users.map((user) => (
               <button
                 key={user.userId}
@@ -472,7 +601,10 @@ export default function AdminPage() {
                 onClick={() => setSelectedUserId(user.userId)}
               >
                 <div className="admin-user-item-top">
-                  <strong>{user.userId}</strong>
+                  <div className="admin-user-name">
+                    <span className="admin-user-dot" />
+                    <strong>{user.userId}</strong>
+                  </div>
                   <span>{user.latestTime || 'No time'}</span>
                 </div>
                 <p>{user.latestMessage || 'No messages yet'}</p>
@@ -484,6 +616,19 @@ export default function AdminPage() {
         <section className="admin-chat">
           <header className="admin-chat-head">
             <div className="admin-chat-head-copy">
+              <div className="admin-chat-mobile-tools">
+                <button
+                  type="button"
+                  className="admin-mobile-nav-btn"
+                  aria-label="Open user queue"
+                  onClick={() => setShowMobileQueue(true)}
+                >
+                  <PanelLeft size={18} />
+                </button>
+                <span className="admin-chat-mobile-pill">
+                  {selectedUser?.userId || 'Select a user'}
+                </span>
+              </div>
               <span className="admin-thread-kicker">Active conversation</span>
               <h1>{selectedUser?.userId || 'Select a user'}</h1>
               <p>
@@ -493,6 +638,23 @@ export default function AdminPage() {
             </div>
             {conversations.length > 0 ? (
               <div className="admin-head-actions">
+                <div className="admin-state-controls">
+                  <input
+                    className="admin-state-input"
+                    value={agentStateText}
+                    onChange={(event) => setAgentStateText(event.target.value)}
+                    list="admin-agent-states"
+                    placeholder="Update agent state..."
+                  />
+                  <datalist id="admin-agent-states">
+                    {AGENT_STATE_OPTIONS.map((state) => (
+                      <option key={state} value={state} />
+                    ))}
+                  </datalist>
+                  <button type="button" className="admin-state-btn" onClick={() => void handlePushAgentState()}>
+                    Push state
+                  </button>
+                </div>
                 <button type="button" className="admin-premium-btn" onClick={() => void handlePremiumPrompt()}>
                   Send premium prompt
                 </button>
@@ -511,33 +673,98 @@ export default function AdminPage() {
             ) : null}
           </header>
 
-          <div className="admin-messages">
-            {messages.map((message) => (
-              <article
-                key={message.id}
-                className={`admin-message ${message.sender === 'admin' ? 'admin' : 'user'}`}
-              >
-                <p>{message.text}</p>
-                {message.attachments && message.attachments.length > 0 ? (
-                  <div className="admin-message-attachments">
-                    {message.attachments.map((file) => (
-                      <div key={file.id} className="admin-message-attachment">
-                        {file.type === 'image' ? <ImageIcon size={12} /> : <FileText size={12} />}
-                        {file.downloadUrl ? (
-                          <a href={file.downloadUrl} target="_blank" rel="noreferrer">
-                            {file.name}
-                          </a>
-                        ) : (
-                          <span>{file.name}</span>
-                        )}
-                      </div>
-                    ))}
+          <div className="admin-thread-shell">
+            <div className="admin-messages">
+              {renderMessages.map((message) => (
+                <article
+                  key={message.id}
+                  className={`admin-message ${message.sender === 'admin' ? 'admin' : 'user'}`}
+                >
+                  {message.sender === 'admin' ? <div className="admin-message-label">SmartRank</div> : <div className="admin-message-label">User</div>}
+                  <p>{message.text}</p>
+                  {message.attachments && message.attachments.length > 0 ? (
+                    <div className="admin-message-attachments">
+                      {message.attachments.map((file) => (
+                        <div key={file.id} className="admin-message-attachment">
+                          {file.type === 'image' ? <ImageIcon size={12} /> : <FileText size={12} />}
+                          {file.downloadUrl ? (
+                            <a href={file.downloadUrl} target="_blank" rel="noreferrer">
+                              {file.name}
+                            </a>
+                          ) : (
+                            <span>{file.name}</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                  <time>{message.time}</time>
+                </article>
+              ))}
+              {latestProgressMessage ? (
+                <section className="admin-agent-card" aria-label="Agent activity">
+                  <div className="admin-agent-card-head">
+                    <div>
+                      <strong>Agent activity</strong>
+                      <span>Live reasoning state</span>
+                    </div>
+                    <div className="admin-agent-chip">Active</div>
                   </div>
+                  <div className="admin-agent-current">{getAgentProgressText(latestProgressMessage)}</div>
+                  <div className="admin-agent-steps" aria-hidden="true">
+                    {AGENT_STATE_OPTIONS.slice(0, 5).map((state, index) => {
+                      const activeIndex = Math.min(progressMessages.length, 5) - 1
+                      return (
+                        <div
+                          key={state}
+                          className={`admin-agent-step ${index < activeIndex ? 'done' : index === activeIndex ? 'active' : ''}`}
+                        >
+                          <span />
+                          <small>{state.replace('...', '')}</small>
+                        </div>
+                      )
+                    })}
+                  </div>
+                  <div className="admin-agent-bar">
+                    <span />
+                  </div>
+                </section>
+              ) : null}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <aside className="admin-preview-rail" aria-label="Attachment preview">
+              <div className="admin-preview-head">
+                <strong>Thread assets</strong>
+                <span>{conversationAttachments.length} items</span>
+              </div>
+              <div className="admin-preview-list">
+                {conversationAttachments.length === 0 ? (
+                  <div className="admin-preview-empty">Uploads from admin or user will stay visible here while the chat continues.</div>
                 ) : null}
-                <time>{message.time}</time>
-              </article>
-            ))}
-            <div ref={messagesEndRef} />
+                {conversationAttachments.map((file) => (
+                  <div key={`${file.id}-${file.time}`} className="admin-preview-card">
+                    <div className="admin-preview-meta">
+                      <span>{file.sender === 'admin' ? 'Admin' : 'User'}</span>
+                      <small>{file.time}</small>
+                    </div>
+                    {file.type === 'image' && file.downloadUrl ? (
+                      <a href={file.downloadUrl} target="_blank" rel="noreferrer" className="admin-preview-image-link">
+                        <img src={file.downloadUrl} alt={file.name} className="admin-preview-image" />
+                      </a>
+                    ) : (
+                      <div className="admin-preview-doc">
+                        <FileText size={15} />
+                        <div>
+                          <strong>{file.name}</strong>
+                          <small>{file.type}</small>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </aside>
           </div>
 
           <form className="admin-reply" onSubmit={(event) => void handleReplySubmit(event)}>

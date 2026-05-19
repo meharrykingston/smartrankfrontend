@@ -4,7 +4,7 @@ import fs from 'node:fs'
 
 const resolvedApiPort = (() => {
   try {
-    const port = fs.readFileSync(new URL('../api/.port', import.meta.url), 'utf-8').trim()
+    const port = fs.readFileSync(new URL('../backend/.port', import.meta.url), 'utf-8').trim()
     return port ? Number(port) : null
   } catch {
     return null
