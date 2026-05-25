@@ -103,13 +103,39 @@
   font-weight: 700;
 }
 
+.sidebar-action.is-primary {
+  min-height: 96px;
+  border-radius: 28px;
+  font-size: 18px;
+}
+
+.sidebar-action.is-selected {
+  background: rgba(85, 85, 88, 0.76);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
 .sidebar-icon,
 .sidebar-resource-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
+  width: 22px;
+  height: 22px;
   color: rgba(255, 255, 255, 0.8);
+}
+
+.sidebar-icon svg,
+.sidebar-resource-icon svg,
+.workspace-breadcrumb-mark svg,
+.todo-title-icon svg,
+.sim-output-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .sidebar-resource-list {
@@ -459,6 +485,11 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+.workspace-breadcrumb-mark {
+  width: 22px;
+  height: 22px;
+}
+
 .todo-panel {
   display: flex;
   flex-direction: column;
@@ -483,6 +514,12 @@
   align-items: center;
   gap: 12px;
   font: 700 18px/1 var(--sans);
+}
+
+.todo-title-icon {
+  width: 22px;
+  height: 22px;
+  color: #25262b;
 }
 
 .todo-count {
@@ -564,9 +601,10 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 10px;
-  border-radius: 18px;
+  border-radius: 22px;
   background: rgba(248, 248, 250, 0.95);
-  padding: 14px 14px 12px;
+  padding: 16px 16px 14px;
+  border: 1px solid rgba(204, 205, 213, 0.9);
   box-shadow:
     0 18px 38px rgba(0, 0, 0, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -574,12 +612,12 @@
 
 .workspace-composer textarea {
   width: 100%;
-  min-height: 126px;
+  min-height: 118px;
   resize: none;
   border: 0;
   outline: 0;
   background: transparent;
-  color: #17181c;
+  color: rgba(32, 34, 41, 0.92);
   font: 500 15px/1.5 var(--sans);
 }
 
@@ -587,12 +625,52 @@
   color: rgba(23, 24, 28, 0.35);
 }
 
-.workspace-composer button {
-  justify-self: start;
+.workspace-composer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.workspace-plus-button {
+  width: 34px;
+  height: 34px;
   border: 0;
   background: transparent;
-  color: #22242a;
-  font: 500 34px/1 var(--sans);
+  color: #2b2d33;
+  font: 400 34px/1 var(--sans);
+  display: grid;
+  place-items: center;
+}
+
+.workspace-action-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.workspace-action-pill {
+  min-width: 92px;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 213, 220, 0.95);
+  background: rgba(235, 236, 241, 0.55);
+  color: rgba(78, 80, 89, 0.58);
+  font: 500 18px/1 var(--sans);
+}
+
+.workspace-action-pill.is-active {
+  background: #ffffff;
+  color: #2a2c31;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
+}
+
+.workspace-composer.is-queue .workspace-action-pill:last-child,
+.workspace-composer.is-steer .workspace-action-pill:first-child {
+  background: #ffffff;
+  color: #2a2c31;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
 }
 
 .workspace-right {
@@ -804,6 +882,11 @@
   padding: 0 16px;
   border-bottom: 1px solid rgba(118, 121, 136, 0.12);
   color: #1e2128;
+}
+
+.sim-output-icon {
+  width: 18px;
+  height: 18px;
 }
 
 .sim-output-body {
@@ -1159,8 +1242,18 @@
     font-size: 14px;
   }
 
-  .workspace-composer button {
+  .workspace-composer-footer {
+    flex-wrap: wrap;
+  }
+
+  .workspace-plus-button {
     font-size: 28px;
+  }
+
+  .workspace-action-pill {
+    min-width: 84px;
+    height: 40px;
+    font-size: 16px;
   }
 
   .sim-panel {
@@ -1390,17 +1483,26 @@
     line-height: 1.45;
   }
 
-  .workspace-composer button {
-    align-self: end;
-    width: 42px;
-    height: 42px;
-    border-radius: 14px;
-    background: #14151a;
-    color: #f7f7f9;
-    display: grid;
-    place-items: center;
-    font-size: 24px;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  .workspace-composer-footer {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .workspace-plus-button {
+    width: 34px;
+    height: 34px;
+    font-size: 28px;
+  }
+
+  .workspace-action-group {
+    gap: 8px;
+  }
+
+  .workspace-action-pill {
+    min-width: 78px;
+    height: 40px;
+    padding: 0 15px;
+    font-size: 15px;
   }
 }
 
@@ -1497,10 +1599,10 @@
     font-size: 13px;
   }
 
-  .workspace-composer button {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
+  .workspace-action-pill {
+    min-width: 72px;
+    height: 38px;
+    font-size: 14px;
   }
 }
 
