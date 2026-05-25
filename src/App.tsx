@@ -435,6 +435,25 @@ function App() {
         </div>
 
         <div className={`workspace-scene ${view === 'workspace' ? 'is-visible' : ''}`}>
+          <div className="mobile-agent-rail" aria-label="Agent controls">
+            <button className="sidebar-action is-active mobile-rail-primary" type="button">
+              <span className="sidebar-icon"><SidebarCogIcon /></span>
+              <span>Operation Management</span>
+            </button>
+
+            {agentDefinitions.map((agent) => (
+              <button
+                key={`mobile-${agent.id}`}
+                className={`sidebar-action mobile-rail-action ${activeAgentId === agent.id ? 'is-selected' : ''}`}
+                type="button"
+                onClick={() => handleAgentSelect(agent.id)}
+              >
+                <span className="sidebar-icon"><SidebarBrainIcon /></span>
+                <span>{agent.label}</span>
+              </button>
+            ))}
+          </div>
+
           <section className="workspace-grid">
             <div className="workspace-left">
               <article className="message-preview">
