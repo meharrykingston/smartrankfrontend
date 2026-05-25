@@ -18,12 +18,15 @@
 
 html {
   background: #08080a;
+  height: 100%;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   background: #08080a;
+  min-height: 100%;
+  overscroll-behavior-y: none;
 }
 
 button,
@@ -86,5 +89,11 @@ p {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }

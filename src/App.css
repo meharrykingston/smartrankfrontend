@@ -1,6 +1,6 @@
 .app-shell {
   display: grid;
-  grid-template-columns: 298px minmax(0, 1fr);
+  grid-template-columns: clamp(272px, 17vw, 312px) minmax(0, 1fr);
   min-height: 100svh;
   background:
     radial-gradient(circle at top center, rgba(255, 255, 255, 0.09), transparent 28%),
@@ -25,7 +25,7 @@
 }
 
 .brand-logo {
-  width: min(190px, 100%);
+  width: min(200px, 100%);
   height: auto;
   object-fit: contain;
 }
@@ -128,7 +128,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: 22px 34px 34px;
+  padding: clamp(20px, 1.8vw, 28px) clamp(28px, 2.4vw, 42px) clamp(28px, 2.4vw, 36px);
   background:
     radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.08), transparent 20%),
     linear-gradient(180deg, #14151a 0%, #0c0c10 100%);
@@ -190,6 +190,8 @@
 .workspace-scene {
   position: relative;
   z-index: 1;
+  width: min(100%, 1480px);
+  margin-inline: auto;
   transition:
     opacity 420ms ease,
     transform 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
@@ -233,8 +235,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
-  padding: 48px 20px 64px;
+  gap: clamp(24px, 2vw, 32px);
+  padding: clamp(36px, 4vw, 56px) 20px clamp(46px, 5vw, 72px);
 }
 
 .orb {
@@ -264,7 +266,7 @@
 }
 
 .hero-section h1 {
-  max-width: 1040px;
+  max-width: 1100px;
   margin: 0;
   text-align: center;
 }
@@ -272,7 +274,7 @@
 .prompt-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  gap: clamp(16px, 1.4vw, 22px);
   max-width: 1480px;
   margin: 0 auto;
   width: 100%;
@@ -282,8 +284,8 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  min-height: 180px;
-  padding: 28px 26px;
+  min-height: clamp(166px, 18vw, 196px);
+  padding: clamp(22px, 1.8vw, 30px) clamp(22px, 1.8vw, 28px);
   text-align: left;
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -319,11 +321,12 @@
   z-index: 2;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 16px;
+  gap: clamp(12px, 1vw, 16px);
   align-items: center;
   width: min(1380px, calc(100% - 36px));
-  margin: 64px auto 0;
-  padding: 18px 18px 18px 20px;
+  margin: clamp(40px, 4.5vw, 64px) auto 0;
+  padding: clamp(14px, 1.2vw, 18px) clamp(14px, 1.2vw, 18px) clamp(14px, 1.2vw, 18px)
+    clamp(16px, 1.3vw, 20px);
   border-radius: 34px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
@@ -395,7 +398,7 @@
   outline: 0;
   background: transparent;
   color: #f3f3f5;
-  font: 500 24px/1.25 var(--sans);
+  font: 500 clamp(18px, 1.6vw, 24px) / 1.25 var(--sans);
   letter-spacing: -0.03em;
 }
 
@@ -405,10 +408,12 @@
 
 .workspace-grid {
   display: grid;
-  grid-template-columns: 378px minmax(0, 1fr);
-  gap: 28px;
+  grid-template-columns: minmax(320px, 0.84fr) minmax(620px, 1.42fr);
+  gap: clamp(22px, 1.8vw, 30px);
   align-items: start;
   min-height: calc(100svh - 150px);
+  width: min(100%, 1380px);
+  margin-inline: auto;
   animation: workspace-rise 620ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
 }
 
@@ -458,6 +463,8 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .todo-header {
@@ -529,6 +536,7 @@
   flex-direction: column;
   gap: 18px;
   padding-top: 10px;
+  padding-bottom: 2px;
 }
 
 .terminal-line {
@@ -559,6 +567,9 @@
   border-radius: 18px;
   background: rgba(248, 248, 250, 0.95);
   padding: 14px 14px 12px;
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .workspace-composer textarea {
@@ -591,7 +602,7 @@
 .sim-panel {
   display: flex;
   flex-direction: column;
-  min-height: 900px;
+  min-height: clamp(760px, 66vw, 920px);
   overflow: hidden;
   border-radius: 18px;
   background:
@@ -608,7 +619,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding: 58px 58px 18px;
+  padding: clamp(34px, 4vw, 58px) clamp(28px, 4vw, 58px) 18px;
 }
 
 .sim-command,
@@ -645,14 +656,14 @@
 .step-flow,
 .progress-card,
 .log-card {
-  margin: 0 58px;
+  margin: 0 clamp(24px, 4vw, 58px);
 }
 
 .step-flow {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-  padding: 38px 40px 12px;
+  gap: clamp(8px, 1vw, 12px);
+  padding: clamp(28px, 2.8vw, 38px) clamp(0px, 2vw, 40px) 12px;
   border-top: 1px solid rgba(109, 111, 125, 0.12);
 }
 
@@ -719,8 +730,8 @@
 }
 
 .progress-card {
-  margin-top: 36px;
-  padding: 20px 26px;
+  margin-top: clamp(24px, 2.2vw, 36px);
+  padding: clamp(16px, 1.4vw, 20px) clamp(18px, 1.8vw, 26px);
 }
 
 .progress-head,
@@ -752,8 +763,8 @@
 }
 
 .log-card {
-  margin-top: 18px;
-  padding: 20px 24px 22px;
+  margin-top: clamp(14px, 1.6vw, 18px);
+  padding: clamp(16px, 1.4vw, 20px) clamp(18px, 1.7vw, 24px) clamp(18px, 1.8vw, 22px);
 }
 
 .log-table {
@@ -796,13 +807,18 @@
 }
 
 .sim-output-body {
-  padding: 18px 20px 28px;
+  padding: clamp(16px, 1.6vw, 18px) clamp(18px, 1.8vw, 20px) clamp(22px, 2.1vw, 28px);
 }
 
 .sim-output-body p {
   color: #2a2d33;
   font-size: 16px;
   line-height: 1.55;
+}
+
+.workspace-right,
+.workspace-left {
+  min-width: 0;
 }
 
 @keyframes orb-float {
@@ -861,7 +877,7 @@
   }
 
   .workspace-grid {
-    grid-template-columns: 340px minmax(0, 1fr);
+    grid-template-columns: minmax(312px, 0.88fr) minmax(0, 1.2fr);
   }
 
   .sim-topline,
@@ -873,6 +889,47 @@
   }
 }
 
+@media (min-width: 1600px) {
+  .main-panel {
+    padding-inline: clamp(36px, 3vw, 56px);
+  }
+
+  .hero-section h1 {
+    max-width: 1180px;
+  }
+
+  .prompt-grid {
+    max-width: 1560px;
+  }
+
+  .workspace-grid {
+    width: min(100%, 1500px);
+    grid-template-columns: minmax(350px, 0.82fr) minmax(760px, 1.5fr);
+  }
+
+  .sim-panel {
+    min-height: 940px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .app-shell {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .sidebar {
+    padding: 24px 10px 16px;
+  }
+
+  .workspace-grid {
+    grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.12fr);
+  }
+
+  .prompt-card {
+    border-radius: 24px;
+  }
+}
+
 @media (max-width: 1100px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -880,7 +937,7 @@
 
   .sidebar {
     gap: 14px;
-    padding: 16px 16px 14px;
+    padding: calc(10px + env(safe-area-inset-top)) 16px 14px;
     border-right: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
@@ -936,7 +993,16 @@
 
 @media (max-width: 900px) {
   .main-panel {
-    padding: 16px;
+    padding: 14px 14px calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    padding: 2px 0 10px;
+    margin-bottom: 2px;
+    background: linear-gradient(180deg, rgba(12, 12, 16, 0.92), rgba(12, 12, 16, 0.4), transparent);
+    backdrop-filter: blur(18px);
   }
 
   .home-scene.is-hidden {
@@ -991,6 +1057,24 @@
     gap: 18px;
   }
 
+  .workspace-right {
+    order: 1;
+  }
+
+  .workspace-left {
+    order: 2;
+  }
+
+  .workspace-breadcrumb,
+  .terminal-list,
+  .workspace-explainer {
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
   .message-preview {
     max-width: none;
     border-radius: 14px;
@@ -1005,10 +1089,17 @@
   .workspace-breadcrumb {
     gap: 8px;
     font-size: 14px;
+    justify-content: space-between;
   }
 
   .todo-panel {
     gap: 12px;
+    padding-top: 14px;
+    padding-inline: 14px;
+    padding-bottom: 16px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .todo-header {
@@ -1029,7 +1120,7 @@
 
   .todo-list {
     gap: 10px;
-    padding: 0 2px 0 2px;
+    padding: 0;
   }
 
   .todo-list li {
@@ -1045,7 +1136,7 @@
 
   .terminal-list {
     gap: 14px;
-    padding-top: 2px;
+    padding-top: 14px;
   }
 
   .terminal-line {
@@ -1153,6 +1244,10 @@
 }
 
 @media (max-width: 640px) {
+  .home-scene {
+    padding-bottom: calc(108px + env(safe-area-inset-bottom));
+  }
+
   .sidebar {
     gap: 12px;
     padding: 14px 12px 12px;
@@ -1201,6 +1296,15 @@
     min-height: auto;
   }
 
+  .workspace-left {
+    gap: 14px;
+    padding-bottom: calc(116px + env(safe-area-inset-bottom));
+  }
+
+  .workspace-right {
+    position: relative;
+  }
+
   .step-flow,
   .progress-card,
   .log-card {
@@ -1247,14 +1351,62 @@
     padding: 12px 12px 18px;
   }
 
+  .workspace-composer {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 7;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 10px;
+    padding: 10px 10px 10px 12px;
+    border-radius: 22px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 246, 249, 0.96)),
+      rgba(248, 248, 250, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+  }
+
+  .composer {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 6;
+    width: auto;
+    margin: 0;
+    padding: 10px;
+    border-radius: 22px;
+    backdrop-filter: blur(18px);
+  }
+
   .workspace-composer textarea {
-    min-height: 96px;
+    min-height: 54px;
+    max-height: 124px;
+    padding-top: 4px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .workspace-composer button {
+    align-self: end;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: #14151a;
+    color: #f7f7f9;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
   }
 }
 
 @media (max-width: 420px) {
   .main-panel {
-    padding: 12px;
+    padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
   }
 
   .home-scene.is-hidden {
@@ -1303,6 +1455,17 @@
     grid-auto-columns: 82vw;
   }
 
+  .workspace-breadcrumb,
+  .terminal-list,
+  .workspace-explainer,
+  .todo-panel {
+    border-radius: 14px;
+  }
+
+  .workspace-left {
+    padding-bottom: calc(108px + env(safe-area-inset-bottom));
+  }
+
   .todo-list li {
     font-size: 13px;
   }
@@ -1311,5 +1474,265 @@
   .workspace-explainer p,
   .sim-output-body p {
     font-size: 13px;
+  }
+
+  .workspace-composer {
+    left: 10px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    padding: 8px 8px 8px 10px;
+    border-radius: 20px;
+  }
+
+  .composer {
+    left: 10px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    padding: 8px;
+    border-radius: 20px;
+  }
+
+  .workspace-composer textarea {
+    min-height: 48px;
+    font-size: 13px;
+  }
+
+  .workspace-composer button {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 430px) and (min-height: 900px) {
+  .home-scene {
+    padding-bottom: calc(116px + env(safe-area-inset-bottom));
+  }
+
+  .hero-section {
+    padding-top: 18px;
+    padding-bottom: 30px;
+  }
+
+  .workspace-left {
+    padding-bottom: calc(122px + env(safe-area-inset-bottom));
+  }
+
+  .workspace-composer,
+  .composer {
+    bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 393px) and (min-height: 840px) {
+  .hero-section h1 {
+    max-width: 320px;
+  }
+
+  .prompt-card {
+    padding: 18px 16px 17px;
+  }
+
+  .workspace-active .sidebar-stack {
+    grid-auto-columns: 80vw;
+  }
+
+  .sim-panel {
+    border-radius: 16px;
+  }
+
+  .sim-topline {
+    padding: 20px 14px 12px;
+  }
+}
+
+@media (max-width: 390px) and (min-height: 840px) {
+  .home-scene {
+    padding-bottom: calc(118px + env(safe-area-inset-bottom));
+  }
+
+  .composer,
+  .workspace-composer {
+    left: 12px;
+    right: 12px;
+    border-radius: 22px;
+  }
+
+  .workspace-left {
+    padding-bottom: calc(124px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 375px) and (min-height: 800px) {
+  .sidebar {
+    padding: 12px 10px 10px;
+  }
+
+  .brand-logo {
+    width: min(148px, 50vw);
+  }
+
+  .hero-section {
+    gap: 16px;
+    padding: 12px 0 24px;
+  }
+
+  .hero-section h1 {
+    max-width: 300px;
+  }
+
+  .prompt-grid {
+    gap: 12px;
+  }
+
+  .prompt-card {
+    padding: 16px 15px;
+    border-radius: 18px;
+  }
+
+  .prompt-card p {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .workspace-active .sidebar-stack {
+    grid-auto-columns: 84vw;
+  }
+
+  .message-preview p,
+  .workspace-explainer p,
+  .todo-list li,
+  .terminal-line,
+  .sim-output-body p {
+    font-size: 13px;
+  }
+
+  .workspace-composer,
+  .composer {
+    left: 10px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 360px) {
+  .main-panel {
+    padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .home-scene.is-hidden {
+    inset: 60px 10px 10px;
+  }
+
+  .workspace-scene {
+    inset: 64px 10px 10px;
+  }
+
+  .brand-logo {
+    width: min(142px, 48vw);
+  }
+
+  .workspace-button,
+  .sidebar-action,
+  .sidebar-resource {
+    min-height: 44px;
+    font-size: 12px;
+  }
+
+  .back-chip {
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .profile-button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .profile-button svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .hero-section {
+    gap: 14px;
+    padding: 10px 0 22px;
+  }
+
+  .hero-section h1 {
+    max-width: 280px;
+  }
+
+  .orb {
+    width: 66px;
+    height: 66px;
+  }
+
+  .prompt-card {
+    padding: 15px 14px;
+    border-radius: 18px;
+  }
+
+  .composer {
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
+    gap: 7px;
+    padding: 7px;
+  }
+
+  .composer-attach,
+  .composer-send {
+    width: 40px;
+    height: 40px;
+  }
+
+  .composer-input {
+    font-size: 14px;
+  }
+
+  .workspace-active .sidebar-stack {
+    grid-auto-columns: 86vw;
+  }
+
+  .workspace-breadcrumb,
+  .terminal-list,
+  .workspace-explainer,
+  .todo-panel {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .sim-topline,
+  .step-flow,
+  .progress-card,
+  .log-card {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .sim-topline {
+    padding: 16px 10px 10px;
+  }
+
+  .step-flow {
+    row-gap: 12px;
+  }
+
+  .progress-card,
+  .log-card {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .workspace-left {
+    padding-bottom: calc(110px + env(safe-area-inset-bottom));
+  }
+
+  .workspace-composer,
+  .composer {
+    left: 8px;
+    right: 8px;
+    bottom: calc(8px + env(safe-area-inset-bottom));
+    border-radius: 18px;
   }
 }
